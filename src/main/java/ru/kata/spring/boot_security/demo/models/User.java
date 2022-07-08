@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
 @Table(name = "users")
 public class User implements UserDetails {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "username")
@@ -25,16 +25,15 @@ public class User implements UserDetails {
     private String password;
 
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch= FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    @Column(name = "roles")
-    private Collection<Role> roles;
+    private List<Role> roles;
 
     public User() {
     }
-    public User(String username, int age, String password, Collection<Role> roles) {
+    public User(String username, int age, String password, List<Role> roles) {
         this.username = username;
         this.age = age;
         this.password = password;
@@ -70,10 +69,10 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
-    public void setRoles(Collection<Role> roles) {
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
     @Override

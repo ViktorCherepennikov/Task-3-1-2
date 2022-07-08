@@ -1,36 +1,17 @@
 package ru.kata.spring.boot_security.demo.services;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
-import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
-import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 
-import java.util.Collections;
 import java.util.List;
 
-@Service
-public class UserService {
-    private final UserRepository userRepository;
+public interface UserService {
 
+    User findByUsername(String username);
 
-    public UserService(UserRepository userRepository) {this.userRepository = userRepository;
-    }
+    User findById(Long id);
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+    List<User> findAll();
 
-    public User findById(Long id){
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public List<User> findAll() {return userRepository.findAll();}
-
-    public void saveUser(User user) {
-        userRepository.save(user);
-    }
-    public void  deleteById(Long id){
-        userRepository.deleteById(id);
-    }
+    void saveUser(User user);
+    void  deleteById(Long id);
 }

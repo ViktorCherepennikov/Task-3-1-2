@@ -12,7 +12,6 @@ import java.util.Set;
 public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
@@ -22,8 +21,6 @@ public class Role implements GrantedAuthority {
         return name;
     }
 
-    @ManyToMany(mappedBy = "roles")
-    private Collection<User> users;
 
     public Role(Long id) {
         this.id = id;
